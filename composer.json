@@ -1,0 +1,45 @@
+{
+    "name": "wemxo/filer-bundle",
+    "description": "Useful symfony bundle to manage file storage.",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "prefer-stable": true,
+    "keywords": [
+        "wemxo",
+        "filer",
+        "bundle"
+    ],
+    "authors": [
+        {
+            "name": "Abdelhak OUADDI [zta9taw]",
+            "email": "abdelhak.freelance@gmail.com",
+            "homepage": "https://github.com/zta9taw"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.2",
+        "ext-openssl": "*",
+        "symfony/framework-bundle": "^6.0|^7.0",
+        "knplabs/knp-gaufrette-bundle": "^0.9.0",
+        "liip/imagine-bundle": "^2.13",
+        "symfony/yaml": "^6.0|^7.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.65",
+        "symfony/phpunit-bridge": "^6.0|^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wemxo\\FilerBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wemxo\\FilerBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
