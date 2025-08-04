@@ -19,6 +19,15 @@ filer:
             apply_watermarK: true
             keep_source: false
             source: thumbnail
+        document:
+            folder: document
+            access: public
+            mime_types: [text/plain]
+            max_size: 5000000
+            filters: ~
+            apply_watermarK: false
+            keep_source: true
+            source: null
     accesses:
         private: 'private_filesystem'
         public: 'public_filesystem'
@@ -34,20 +43,25 @@ filer:
 
 namespace App;
 
+use Wemxo/FilerBundle/FilerInput;
+
 classe MyService {
     
-    public function __construct(private FilerInterface $passwordFiler, private FilerInterface $emailFiler)
+    public function __construct(private FilerInterface $filer)
     {
     }
     
     public function testEncryptPassword(string $text): string
     {
-        return $this->passwordFiler->encrypt($text);
-    }
-    
-    public function testDecryptPassword(string $text): string
-    {
-        return $this->passwordFiler->decrypt($text);
+        $filerInput = new FilerInput(
+            'test.txt',
+            'Hello world !',
+            'text/plain',
+            120,
+            'document'
+        );
+        
+        $output = $this->filer->saveFile($input);
     }
 }
 ```
