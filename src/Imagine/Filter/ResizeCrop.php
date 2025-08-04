@@ -3,8 +3,10 @@
 namespace Wemxo\FilerBundle\Imagine\Filter;
 
 use Imagine\Filter\FilterInterface;
-use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\ImagineInterface;
+use Imagine\Image\Palette\PaletteInterface;
 use Imagine\Image\Palette\RGB;
 use Imagine\Image\Point;
 use Imagine\Imagick\Imagine;
@@ -13,21 +15,25 @@ class ResizeCrop implements FilterInterface
 {
     private string $background;
 
-    private Box $size;
+    private BoxInterface $size;
 
-    public function __construct(Box $size, string $background = '#FFFFFF')
+    private ImagineInterface $imagine;
+
+    private PaletteInterface $palette;
+
+    public function __construct(BoxInterface $size, string $background = '#FFFFFF', ?ImagineInterface $imagine = null, ?PaletteInterface $palette = null)
     {
         $this->background = $background;
         $this->size = $size;
+        $this->imagine = $imagine ?? new Imagine();
+        $this->palette = $palette ?? new RGB();
     }
 
     public function apply(ImageInterface $image): ImageInterface
     {
         $image = $image->thumbnail($this->size, ImageInterface::THUMBNAIL_FLAG_UPSCALE);
-        $palette = new RGB();
-        $color = $palette->color($this->background);
-        $imagickAdapter = new Imagine();
-        $resultImage = $imagickAdapter->create($this->size, $color);
+        $color = $this->palette->color($this->background);
+        $resultImage = $this->imagine->create($this->size, $color);
         $widthR = $image->getSize()->getWidth();
         $heightR = $image->getSize()->getHeight();
         $startX = $startY = 0;
